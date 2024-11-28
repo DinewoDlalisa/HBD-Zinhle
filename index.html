@@ -34,7 +34,7 @@
       max-width: 800px;
       margin: 0 auto 30px;
       line-height: 1.6;
-      position: relative; /* for flower overlay */
+      position: relative;
       z-index: 1;
     }
 
@@ -71,20 +71,17 @@
       background-size: cover;
       animation: scatterFlowers 3s forwards;
       pointer-events: none;
+      will-change: transform, opacity;
     }
 
     @keyframes scatterFlowers {
       0% {
         transform: scale(0.5);
         opacity: 0;
-        top: 50%;
-        left: 50%;
       }
       100% {
         transform: scale(1);
         opacity: 1;
-        top: calc(50% + 100px);
-        left: calc(50% + 100px);
       }
     }
 
@@ -131,7 +128,7 @@
     <p class="countdown" id="countdown"></p>
 
     <!-- Surprise Button -->
-    <button class="button" onclick="scatterFlowers()">Click for Your First Flower!</button>
+    <button class="button">Click for Your First Flower!</button>
 
     <!-- Flower Surprise -->
     <div id="flowerOverlay" class="flower-overlay">
@@ -141,7 +138,7 @@
 
   <script>
     // Countdown Timer
-    const countdownDate = new Date("Sep 1, 2025 00:00:00").getTime();
+    const countdownDate = new Date("Nov 29, 2024 00:00:00").getTime();
     
     const countdownFunction = setInterval(function() {
       const now = new Date().getTime();
@@ -162,25 +159,27 @@
 
     // Scatter Flower Animation
     function scatterFlowers() {
-      // Show the flower overlay
       const flowerOverlay = document.getElementById("flowerOverlay");
       flowerOverlay.style.display = "block";
 
-      // Create flowers that scatter
-      const flowerCount = 10; // Number of flowers to scatter
+      const flowerCount = 10; 
       for (let i = 0; i < flowerCount; i++) {
         const flower = document.createElement("div");
         flower.classList.add("flower");
-        flower.style.top = `${Math.random() * 100}%`; // Random position
-        flower.style.left = `${Math.random() * 100}%`;
+        flower.style.top = `${Math.random() * (window.innerHeight - 50)}px`;
+        flower.style.left = `${Math.random() * (window.innerWidth - 50)}px`;
         document.body.appendChild(flower);
 
-        // Remove flower after animation ends
+        // Smoothly remove flowers after animation ends
         setTimeout(() => {
-          flower.remove();
-        }, 3000); // Match animation duration
+          flower.style.opacity = '0';
+          setTimeout(() => flower.remove(), 500);
+        }, 2500);
       }
     }
+
+    // Add event listener for the button
+    document.querySelector('.button').addEventListener('click', scatterFlowers);
   </script>
 </body>
 </html>
