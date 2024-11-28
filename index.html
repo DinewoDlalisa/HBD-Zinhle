@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Zinhle!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    
+    .container {
+      text-align: center;
+      padding: 40px;
+      position: relative;
+    }
+
+    h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 3.5em;
+      color: #ff69b4;
+      margin-bottom: 10px;
+    }
+
+    .message {
+      font-size: 1.4em;
+      color: #333;
+      max-width: 800px;
+      margin: 0 auto 30px;
+      line-height: 1.6;
+      position: relative; /* for flower overlay */
+      z-index: 1;
+    }
+
+    .countdown {
+      font-size: 2em;
+      font-weight: 500;
+      color: #ff6347;
+      margin-bottom: 40px;
+    }
+
+    /* Button Styles */
+    .button {
+      background-color: #FFD700;
+      color: #fff;
+      font-size: 1.2em;
+      padding: 12px 30px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #FF4500;
+      transform: translateY(-5px);
+    }
+
+    /* Flower Animation */
+    .flower {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background-image: url('https://img.icons8.com/ios/452/flower.png');
+      background-size: cover;
+      animation: scatterFlowers 3s forwards;
+      pointer-events: none;
+    }
+
+    @keyframes scatterFlowers {
+      0% {
+        transform: scale(0.5);
+        opacity: 0;
+        top: 50%;
+        left: 50%;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+        top: calc(50% + 100px);
+        left: calc(50% + 100px);
+      }
+    }
+
+    /* Flower Overlay */
+    .flower-overlay {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      animation: overlayFlower 2s forwards;
+    }
+
+    @keyframes overlayFlower {
+      0% {
+        transform: translate(-50%, -50%) scale(0);
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.5em;
+      }
+
+      .message {
+        font-size: 1.2em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Happy Birthday Zinhle!</h1>
+    <p class="message" id="birthdayMessage">
+      Zinhle, you’re an amazing friend, and I’m so grateful to have you in my life! May your day be filled with love, laughter, and endless joy. Here’s to celebrating YOU today and always! 💖
+    </p>
+
+    <!-- Countdown Timer -->
+    <p class="countdown" id="countdown"></p>
+
+    <!-- Surprise Button -->
+    <button class="button" onclick="scatterFlowers()">Click for Your First Flower!</button>
+
+    <!-- Flower Surprise -->
+    <div id="flowerOverlay" class="flower-overlay">
+      <img src="https://img.icons8.com/ios/452/flower.png" alt="Flower" style="width: 60px; height: 60px;">
+    </div>
+  </div>
+
+  <script>
+    // Countdown Timer
+    const countdownDate = new Date("Sep 1, 2025 00:00:00").getTime();
+    
+    const countdownFunction = setInterval(function() {
+      const now = new Date().getTime();
+      const distance = countdownDate - now;
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+      if (distance < 0) {
+        clearInterval(countdownFunction);
+        document.getElementById("countdown").innerHTML = "It's your special day!";
+      }
+    }, 1000);
+
+    // Scatter Flower Animation
+    function scatterFlowers() {
+      // Show the flower overlay
+      const flowerOverlay = document.getElementById("flowerOverlay");
+      flowerOverlay.style.display = "block";
+
+      // Create flowers that scatter
+      const flowerCount = 10; // Number of flowers to scatter
+      for (let i = 0; i < flowerCount; i++) {
+        const flower = document.createElement("div");
+        flower.classList.add("flower");
+        flower.style.top = `${Math.random() * 100}%`; // Random position
+        flower.style.left = `${Math.random() * 100}%`;
+        document.body.appendChild(flower);
+
+        // Remove flower after animation ends
+        setTimeout(() => {
+          flower.remove();
+        }, 3000); // Match animation duration
+      }
+    }
+  </script>
+</body>
+</html>
